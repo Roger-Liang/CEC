@@ -1,0 +1,27 @@
+Namespace(Dataset=<module 'dataloader.cifar100.cifar' from 'E:\\AStudy_File\\Programing\\Pycharm\\projects\\Few_Shot-Incremental_Learning\\CEC-CVPR2021\\dataloader\\cifar100\\cifar.py'>, base_class=60, base_mode='ft_cos', batch_size_base=32, batch_size_new=0, dataroot='E:/AStudy_File/Programing/Pycharm/projects/Few_Shot-Incremental_Learning/datasets/', dataset='cifar100_1', debug=False, decay=0.0005, device=device(type='cuda', index=0), episode_query=15, episode_shot=1, episode_way=15, epochs_base=100, epochs_new=100, gamma=0.5, gpu='0', low_shot=1, low_way=15, lr_base=0.002, lr_new=0.1, lrg=0.0002, milestones=[60, 70], model_dir='./params/cifar100/session0_max_acc.pth', momentum=0.9, new_mode='ft_cos', not_data_init=False, num_classes=100, num_gpu=1, num_workers=4, project='cec', save_path='checkpoint\\cifar100_1/cec/15W-1S-15Q-50Epi-L15W-L1SEpo_100-Lr1_0.002000-Lrg_0.00020-Step_20-Gam_0.50-T_16.00-ftLR_0.100-ftEpoch_100', schedule='Step', seed=1, sessions=9, set_no_val=True, shot=10, start_session=1, step=20, temperature=16, test_batch_size=100, train_episode=50, way=5)
+Session 1, Test Best Epoch 0,
+best test Acc 68.5850
+
+Session 2, Test Best Epoch 0,
+best test Acc 64.8710
+
+Session 3, Test Best Epoch 0,
+best test Acc 61.2670
+
+Session 4, Test Best Epoch 0,
+best test Acc 58.5120
+
+Session 5, Test Best Epoch 0,
+best test Acc 56.2940
+
+Session 6, Test Best Epoch 0,
+best test Acc 54.4670
+
+Session 7, Test Best Epoch 0,
+best test Acc 52.2530
+
+Session 8, Test Best Epoch 0,
+best test Acc 50.3000
+
+[0.0, 68.585, 64.871, 61.267, 58.512, 56.294, 54.467, 52.253, 50.3]
+Best epoch:0
