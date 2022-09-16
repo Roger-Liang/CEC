@@ -3,7 +3,7 @@ import importlib
 from utils import *
 
 MODEL_DIR = None
-DATA_DIR = 'E:/AStudy_File/Programing/Pycharm/projects/Few_Shot-Incremental_Learning/datasets/'
+DATA_DIR = '/data/incremental_learning/datasets'
 PROJECT = 'base'
 
 
