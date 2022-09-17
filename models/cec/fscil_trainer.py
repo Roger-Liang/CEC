@@ -52,7 +52,7 @@ class FSCILTrainer(Trainer):
     def get_base_dataloader_meta(self):
         txt_path = "data/index_list/" + self.args.dataset + "/session_" + str(0 + 1) + '.txt'
         class_index = np.arange(self.args.base_class)
-        if self.args.dataset == 'cifar100' or self.args.dataset == 'cifar100_1':
+        if self.args.dataset == 'cifar100' or self.args.dataset == 'cifar100_1' or self.args.dataset == 'cifar100_2':
             # class_index = np.arange(self.args.base_class)
             trainset = self.args.Dataset.CIFAR100(root=self.args.dataroot, train=True, download=True,
                                                   index=class_index, base_sess=True)
@@ -90,7 +90,7 @@ class FSCILTrainer(Trainer):
     def get_new_dataloader(self, session, test_new_only=False):
         txt_path = "data/index_list/" + self.args.dataset + "/session_" + str(session + 1) + '.txt'
         # txt_path = "data/index_list/" + self.args.dataset + "_classes/class_" + str(session + 59) + "_index.txt"
-        if self.args.dataset == 'cifar100' or self.args.dataset == 'cifar100_1':
+        if self.args.dataset == 'cifar100' or self.args.dataset == 'cifar100_1' or self.args.dataset == 'cifar100_2':
             class_index = open(txt_path).read().splitlines()
             trainset = self.args.Dataset.CIFAR100(root=self.args.dataroot, train=True, download=False,
                                                   index=class_index, base_sess=False)
@@ -119,7 +119,7 @@ class FSCILTrainer(Trainer):
         else:
             class_new = self.get_session_classes(session, test_new_only)
 
-        if self.args.dataset == 'cifar100' or self.args.dataset == 'cifar100_1':
+        if self.args.dataset == 'cifar100' or self.args.dataset == 'cifar100_1' or self.args.dataset == 'cifar100_2':
             testset = self.args.Dataset.CIFAR100(root=self.args.dataroot, train=False, download=False,
                                                  index=class_new, base_sess=False)
         if self.args.dataset == 'cub200':

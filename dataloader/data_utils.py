@@ -18,6 +18,13 @@ def set_up_datasets(args):
         args.way = 5
         args.shot = 10
         args.sessions = 9
+    if args.dataset == 'cifar100_2':
+        import dataloader.cifar100.cifar as Dataset
+        args.base_class = 60
+        args.num_classes = 100
+        args.way = 4
+        args.shot = 128
+        args.sessions = 11
     if args.dataset == 'cub200':
         import dataloader.cub200.cub200 as Dataset
         args.base_class = 100
@@ -47,7 +54,7 @@ def get_dataloader(args,session):
 def get_base_dataloader(args):
     txt_path = "data/index_list/" + args.dataset + "/session_" + str(0 + 1) + '.txt'
     class_index = np.arange(args.base_class)
-    if args.dataset == 'cifar100' or args.dataset == 'cifar100_1':
+    if args.dataset == 'cifar100' or args.dataset == 'cifar100_1' or args.dataset == 'cifar100_2':
 
         trainset = args.Dataset.CIFAR100(root=args.dataroot, train=True, download=True,
                                          index=class_index, base_sess=True)
@@ -81,7 +88,7 @@ def get_base_dataloader(args):
 def get_base_dataloader_meta(args):
     txt_path = "data/index_list/" + args.dataset + "/session_" + str(0 + 1) + '.txt'
     class_index = np.arange(args.base_class)
-    if args.dataset == 'cifar100' or args.dataset == 'cifar100_1':
+    if args.dataset == 'cifar100' or args.dataset == 'cifar100_1' or args.dataset == 'cifar100_2':
         trainset = args.Dataset.CIFAR100(root=args.dataroot, train=True, download=True,
                                          index=class_index, base_sess=True)
         testset = args.Dataset.CIFAR100(root=args.dataroot, train=False, download=False,
@@ -118,7 +125,7 @@ def get_base_dataloader_meta(args):
 
 def get_new_dataloader(args,session):
     txt_path = "data/index_list/" + args.dataset + "/session_" + str(session + 1) + '.txt'
-    if args.dataset == 'cifar100' or args.dataset == 'cifar100_1':
+    if args.dataset == 'cifar100' or args.dataset == 'cifar100_1' or args.dataset == 'cifar100_2':
         class_index = open(txt_path).read().splitlines()
         trainset = args.Dataset.CIFAR100(root=args.dataroot, train=True, download=False,
                                          index=class_index, base_sess=False)
@@ -145,7 +152,7 @@ def get_new_dataloader(args,session):
     # test on all encountered classes
     class_new = get_session_classes(args, session)
 
-    if args.dataset == 'cifar100' or args.dataset == 'cifar100_1':
+    if args.dataset == 'cifar100' or args.dataset == 'cifar100_1' or args.dataset == 'cifar100_2':
         testset = args.Dataset.CIFAR100(root=args.dataroot, train=False, download=False,
                                         index=class_new, base_sess=False)
     if args.dataset == 'cub200':
