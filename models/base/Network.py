@@ -13,7 +13,7 @@ class MYNET(nn.Module):
         self.mode = mode
         self.args = args
         # self.num_features = 512
-        if self.args.dataset in ['cifar100', 'cifar100_1']:
+        if self.args.dataset in ['cifar100', 'cifar100_1', 'cifar100_2']:
             self.encoder = resnet20()
             self.num_features = 64
             # self.encoder = create_model('efficientnetv2_s', pretrained=True, features_only=False)
