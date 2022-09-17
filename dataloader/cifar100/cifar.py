@@ -138,7 +138,8 @@ class CIFAR10(VisionDataset):
         ind_np = np.array(ind_list)
         # index = ind_np.reshape((5,5))
         # index = ind_np.reshape((1, 500))
-        index = ind_np.reshape((5, 10))
+        # index = ind_np.reshape((5, 10))
+        index = ind_np.reshape((4, 32))
         for i in index:
             ind_cl = i
             if data_tmp == []:
