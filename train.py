@@ -30,7 +30,7 @@ def get_command_line_parser():
     parsers.add_argument('-temperature', type=int, default=16)
     parsers.add_argument('-not_data_init', action='store_true', help='using average data embedding to init or not')
 
-    parsers.add_argument('-batch_size_base', type=int, default=32)
+    parsers.add_argument('-batch_size_base', type=int, default=128)
     parsers.add_argument('-batch_size_new', type=int, default=0,
                          help='set 0 will use all the available training image for new')
     parsers.add_argument('-test_batch_size', type=int, default=100)
