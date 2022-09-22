@@ -32,8 +32,12 @@ class FSCILTrainer(Trainer):
 
     def get_optimizer_base(self):
 
-        optimizer = torch.optim.SGD(self.model.parameters(), self.args.lr_base, momentum=0.9, nesterov=True,
-                                    weight_decay=self.args.decay)
+        optimizer = torch.optim.SGD([
+            {'params': (p for name, p in self.model.named_parameters() if 'bias' not in name and 'bn' not in name),
+             'weight_decay': self.args.decay},
+            {'params': (p for name, p in self.model.named_parameters() if 'bias' in name or 'bn' in name)}
+        ], self.args.lr_base, momentum=0.9, nesterov=True)
+
         if self.args.schedule == 'Step':
             scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=self.args.step, gamma=self.args.gamma)
         elif self.args.schedule == 'Milestone':
