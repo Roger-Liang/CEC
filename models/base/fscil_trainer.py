@@ -1,3 +1,5 @@
+import torch.optim.lr_scheduler
+
 from .base import Trainer
 import torch.nn as nn
 from copy import deepcopy
@@ -16,8 +18,8 @@ class FSCILTrainer(Trainer):
         self.args = set_up_datasets(self.args)
 
         self.model = MYNET(self.args, mode=self.args.base_mode)
+        self.model = self.model.to('cuda:0')
         self.model = nn.DataParallel(self.model, list(range(self.args.num_gpu)))
-        self.model = self.model.cuda()
 
         if self.args.model_dir is not None:
             print('Loading init parameters from: %s' % self.args.model_dir)
@@ -37,6 +39,8 @@ class FSCILTrainer(Trainer):
         elif self.args.schedule == 'Milestone':
             scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=self.args.milestones,
                                                              gamma=self.args.gamma)
+        else:
+            scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=self.args.gamma)
 
         return optimizer, scheduler
 
@@ -163,6 +167,10 @@ class FSCILTrainer(Trainer):
             self.args.save_path = self.args.save_path + 'Epo_%d-Lr_%.4f-Step_%d-Gam_%.2f-Bs_%d-Mom_%.2f' % (
                 self.args.epochs_base, self.args.lr_base, self.args.step, self.args.gamma, self.args.batch_size_base,
                 self.args.momentum)
+        elif self.args.schedule == 'ExponentialLR':
+            self.args.save_path = self.args.save_path + 'Epo_%d-Lr_%.4f-Gam_%.2f-Bs_%d-Mom_%.2f' % (
+                self.args.epochs_base, self.args.lr_base, self.args.gamma, self.args.batch_size_base,
+                self.args.momentum)
         if 'cos' in mode:
             self.args.save_path = self.args.save_path + '-T_%.2f' % self.args.temperature
 
@@ -174,5 +182,6 @@ class FSCILTrainer(Trainer):
             self.args.save_path = os.path.join('debug', self.args.save_path)
 
         self.args.save_path = os.path.join('checkpoint', self.args.save_path)
+        self.args.save_path = self.args.save_path + 'EffiencientnetV2-s'
         ensure_path(self.args.save_path)
         return None

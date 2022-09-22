@@ -21,7 +21,7 @@ def get_command_line_parser():
     parsers.add_argument('-epochs_new', type=int, default=100, help='epochs in update_fc_ft')
     parsers.add_argument('-lr_base', type=float, default=0.1)
     parsers.add_argument('-lr_new', type=float, default=0.1, help='Learning rate to finetune new_fc')
-    parsers.add_argument('-schedule', type=str, default='Step', choices=['Step', 'Milestone'])
+    parsers.add_argument('-schedule', type=str, default='Step', choices=['Step', 'Milestone', 'ExponentialLR'])
     parsers.add_argument('-milestones', nargs='+', type=int, default=[60, 70])
     parsers.add_argument('-step', type=int, default=40)
     parsers.add_argument('-decay', type=float, default=0.0005)

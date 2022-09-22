@@ -4,6 +4,8 @@ from models.resnet18_encoder import *
 from models.resnet20_cifar import *
 from timm import create_model
 
+from Efficientnet.efficientnet_v2 import EfficientNetV2
+
 
 class MYNET(nn.Module):
 
@@ -14,11 +16,12 @@ class MYNET(nn.Module):
         self.args = args
         # self.num_features = 512
         if self.args.dataset in ['cifar100', 'cifar100_1', 'cifar100_2']:
-            self.encoder = resnet20()
-            self.num_features = 64
-            # self.encoder = create_model('efficientnetv2_s', pretrained=True, features_only=False)
-            # self.encoder = torch.nn.Sequential(*list(self.encoder.children())[:-2])
-            # self.num_features = 1280
+            # self.encoder = resnet20()
+            # self.num_features = 64
+            self.encoder = EfficientNetV2('s', pretrained=True)
+            self.encoder.dropout = torch.nn.Sequential()
+            self.encoder.fc = torch.nn.Sequential()
+            self.num_features = 1280
         if self.args.dataset in ['mini_imagenet']:
             self.encoder = resnet18(False, args)  # pretrained=False
             self.num_features = 512
@@ -47,6 +50,7 @@ class MYNET(nn.Module):
 
     def encode(self, x):
         x = self.encoder(x)
+        x = x.unsqueeze(-1).unsqueeze(-1)
         x = F.adaptive_avg_pool2d(x, 1)
         x = x.squeeze(-1).squeeze(-1)
         return x
